@@ -1,0 +1,35 @@
+h2{
+  @include fs(20,30);
+  padding-bottom: 40px;
+  p{
+    text-align: center;
+  }
+}
+
+.sec-02_slick_content{
+  width: 60%;
+  margin: 0 auto;
+  li{
+    p{
+      color: red;
+    }
+  }
+}
+
+
+
+.section{
+  display: flex;
+  padding: 0 50px;
+  margin-top: 30px;
+  &_title{
+    width: 30%;
+    padding-right: 20px;
+  }
+  &_ctn{
+    width: 70%;
+    img{
+      width: 100%;
+    }
+  }
+}

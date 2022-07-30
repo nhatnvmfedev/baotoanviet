@@ -1,18 +1,13 @@
-version: "3"
 
 # Services
-# -----------------------------------------------------------------------------
 services:
   # Database
-  # -----------------------------------------
   db:
     image: mysql:5.7
     container_name: ${PROJECT_NAME}-db
     volumes:
-      - db_data:/var/lib/mysql
+      - db-data:/var/lib/mysql
       - ./db-data:/docker-entrypoint-initdb.d
-      - ./mysql-config:/etc/mysql/conf.d
-    #restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
       MYSQL_DATABASE: wordpress
@@ -20,22 +15,19 @@ services:
       MYSQL_PASSWORD: wordpress
 
   # WordPress
-  # -----------------------------------------
   wordpress:
     image: wordpress:latest
     container_name: ${PROJECT_NAME}-web
     volumes:
       - ./src:/var/www/html
-      - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - db
     ports:
-      - ${PORT_NUM}:80
-    #restart: always
+      - ${WEB_PORT_NUMBER}:80
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
     domainname: ${PROJECT_NAME}.test
 
   phpmyadmin:
@@ -46,16 +38,16 @@ services:
       - PMA_HOST=db:3306
       - PMA_USER=wordpress
       - PMA_PASSWORD=wordpress
-#    restart: always
     links:
       - db
+    environment:
+      UPLOAD_LIMIT: 100M
     ports:
-      - 8828:80
+      - ${PHPMYADMIN_PORT_NUMBER}:80
     volumes:
       - /sessions
     depends_on:
       - db
-
 volumes:
-  db_data:
+  db-data:
     driver: local
