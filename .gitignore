@@ -16,3 +16,15 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+hosts.yml
+.DS_Store
+*.dump
+*.gzip
+*.sql.gz
+node_modules/
+package-lock.json
+yarn.lock
+# WordPress files
+src/wp-content/uploads/
+# src/wp-content/plugins/
+!.gitkeep
